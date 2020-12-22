@@ -1,0 +1,61 @@
+<h1>Listado de heroes</h1>
+<hr>
+<div class="row">
+    <div class="col-12 d-flex justify-content-end">
+        <button class="btn btn-primary" routerLink="/heroe/nuevo">
+            <i class="fa fa-plus"></i>
+            Agregar
+        </button>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <div  *ngIf="!loading && heroes.length === 0" class="alert alert-warning text-center" role="alert">
+            <h4 class="alert-heading">No se han encontrado registros</h4>
+            <div>
+                <i class="fa fa-exclamation fa-2x"></i>
+            </div>
+        </div>
+        <div *ngIf="loading" class="alert alert-primary text-center" role="alert">
+            <h4 class="alert-heading">Cargando</h4>
+            <div>
+                <i class="fa fa-sync-alt fa-spin fa-2x"></i>
+            </div>
+            <div>
+                Espere por favor
+            </div>
+        </div>
+        <table *ngIf="!loading && heroes.length > 0" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Nombre</th>
+                    <th>Poder</th>
+                    <th>Vivo</th>
+                    <th>Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let heroe of heroes; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ heroe.nombre }}</td>
+                    <td>{{ heroe.poder }}</td>
+                    <td>
+                        <span *ngIf="heroe.vivo" class="badge badge-success">Vivo</span>
+                        <span *ngIf="!heroe.vivo" class="badge badge-danger">Muerto</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-info mr-1"
+                                [routerLink]="['/heroe', heroe.id]">
+                            <i class="fa fa-pen"></i>
+                        </button>
+                        <button class="btn btn-danger"
+                                (click)="borrarHeroe(heroe, i)">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
